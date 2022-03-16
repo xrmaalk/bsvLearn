@@ -11,6 +11,10 @@
       type="text/javascript"
       src="https://unpkg.com/bsv@1.5.3/bsv.min.js"
     ></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"
+    ></script>
   </head>
   <body>
     <br />
@@ -23,15 +27,39 @@
       var privKey = bsv.PrivateKey.fromRandom();
       var pubKey = bsv.PublicKey.fromPrivateKey(privKey);
       var address = bsv.Address.fromPublicKey(pubKey);
+      var cipherText = CryptoJS.AES.encrypt(privateKey.toString(), password);
 
-      var p = document.querySelector("#privKey");
-      p.innerHTML = privKey.toString();
+      //var p = document.querySelector("#privText");
+      //p.innerHTML = privKey.toString();
 
-      var y = document.querySelector("#pubKey");
+      var p = document.querySelector("#encrypted");
+      p.innerHTML = ciphertext.toString();
+
+      var y = document.querySelector("#pubText");
       y.innerHTML = pubKey.toString();
 
       var z = document.querySelector("#address");
       z.innerHTML = address.toString();
+    </script>
+
+    <script>
+      var privateKey = bsv.PrivateKey.fromRandom();
+      var address = bsv.Address.fromPrivateKey(privateKey).toString();
+      var password = "userPassword";
+
+      var ciphertext = CryptoJS.AES.encrypt(
+        privateKey.toString(),
+        password
+      ).toString();
+
+      var bytes = CryptoJS.AES.decrypt(ciphertext, password);
+      var originalText = bytes.toString(CryptoJS.enc.Utf8);
+
+      //var p = document.querySelector("#privText");
+      //p.innerHTML = privateKey.toString();
+
+      //var p = document.querySelector("#decrypted");
+      //p.innerHTML = originalText.toString();
     </script>
   </body>
 </html>
